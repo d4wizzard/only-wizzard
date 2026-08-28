@@ -1,11 +1,14 @@
 const videoFeed=document.querySelector('.content');
-[
+const videoPosts=[
  {title:'Der Zauberer-Tanz',time:'Video · Tanzritual',copy:'Ein Schritt nach vorn, ein Blick zurück und genau genug Hüftschwung, damit selbst der steifste Zauberstab seinen Takt findet. Ton an und mittanzen.',src:'assets/zauberer-tanz.mp4'},
  {title:'D4Serve – der verborgene Dienst',time:'Video · D4Serve',copy:'Was geschieht, wenn der Wizzard nicht nur zaubert, sondern serviert? Ein neuer Blick hinter die Kulissen von D4Serve – aufmerksam, diskret und mit einer Prise Magie.',src:'assets/d4serve.mp4'},
  {title:'Wenn der Zauberer zu glühen beginnt',time:'Neu · Zauberer-Moment',copy:'Ein warmer Schein, ein ruhiger Blick und plötzlich liegt Spannung in der Luft. Dieser Zauber wirkt ohne Eile: erst neugierig annähern, die Magie aufbauen und gemeinsam entscheiden, wie intensiv das Leuchten werden darf.',src:'assets/zauberer-gluehen.mp4'},
  {title:'D4Serve – ein Blick genügt',time:'Neu · D4Serve-Einladung',copy:'Er kommt näher, zwinkert und lässt keinen Zweifel daran, dass der Abend interessant wird. D4Serve bedeutet Aufmerksamkeit mit Haltung: Wünsche werden ausgesprochen, Grenzen respektiert und jedes Spiel beginnt mit einem eindeutigen Ja.',src:'assets/d4serve-zwinkern.mp4'},
- {title:'D4Serve nach Einbruch der Nacht',time:'Neu · Verborgener Dienst',copy:'Wenn die Türen des Salons geschlossen sind, beginnt der diskrete Dienst. Gedämpftes Licht, sorgfältig gewählte Rituale und ein Wizzard, der genau zuhört – für volljährige Gäste, die ihre Regeln vorher gemeinsam festlegen.',src:'assets/d4serve-nachtzauber.mp4'}
-].forEach(video=>videoFeed.insertAdjacentHTML('beforeend',`<article class="post video-post"><header class="post-head"><div class="post-avatar">OW</div><div><b>Only Wizzard <span class="verified">✓</span></b><span>${video.time}</span></div></header><div class="post-copy"><p><b>${video.title}</b> ${video.copy}</p></div><video controls playsinline preload="metadata"><source src="${video.src}" type="video/mp4">Dein Browser unterstützt dieses Video nicht.</video><footer class="post-actions"><button class="like">♡ <span>219</span></button><button>○ <span>48</span></button><button>↗</button><button class="bookmark">⌑</button></footer></article>`));
+ {title:'Zauberer nach Einbruch der Nacht',time:'Neu · Nachtzauber',copy:'Wenn die Türen des Salons geschlossen sind, beginnt die Stunde des Zauberers. Gedämpftes Licht, sorgfältig gewählte Rituale und ein Wizzard, der genau zuhört – für volljährige Gäste, die ihre Regeln vorher gemeinsam festlegen.',src:'assets/d4serve-nachtzauber.mp4'}
+];
+const renderVideoPost=video=>`<article class="post video-post"><header class="post-head"><div class="post-avatar">OW</div><div><b>Only Wizzard <span class="verified">✓</span></b><span>${video.time}</span></div></header><div class="post-copy"><p><b>${video.title}</b> ${video.copy}</p></div><video controls playsinline preload="metadata"><source src="${video.src}" type="video/mp4">Dein Browser unterstützt dieses Video nicht.</video><footer class="post-actions"><button class="like">♡ <span>219</span></button><button>○ <span>48</span></button><button>↗</button><button class="bookmark">⌑</button></footer></article>`;
+videoFeed.insertAdjacentHTML('afterbegin',videoPosts.slice(0,2).map(renderVideoPost).join(''));
+videoFeed.insertAdjacentHTML('beforeend',videoPosts.slice(2).map(renderVideoPost).join(''));
 
 document.querySelectorAll('.content .post').forEach((post,index)=>{
   const control=document.createElement('section');control.className='comments-control';
