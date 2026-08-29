@@ -9,7 +9,10 @@ const videoPosts=[
  {title:'Zauberer nach Einbruch der Nacht',time:'Neu · Nachtzauber',copy:'Wenn die Türen des Salons geschlossen sind, beginnt die Stunde des Zauberers. Gedämpftes Licht, sorgfältig gewählte Rituale und ein Wizzard, der genau zuhört – für volljährige Gäste, die ihre Regeln vorher gemeinsam festlegen.',src:'assets/d4serve-nachtzauber.mp4'}
 ];
 const renderVideoPost=video=>`<article class="post video-post"><header class="post-head"><div class="post-avatar">OW</div><div><b>Only Wizzard <span class="verified">✓</span></b><span>${video.time}</span></div></header><div class="post-copy"><p><b>${video.title}</b> ${video.copy}</p></div><video controls playsinline preload="metadata"${video.poster?` poster="${video.poster}"`:''}><source src="${video.src}" type="video/mp4">Dein Browser unterstützt dieses Video nicht.</video><footer class="post-actions"><button class="like">♡ <span>219</span></button><button>○ <span>48</span></button><button>↗</button><button class="bookmark">⌑</button></footer></article>`;
-videoFeed.insertAdjacentHTML('afterbegin',videoPosts.slice(0,2).map(renderVideoPost).join(''));
+const featuredVideoHtml=videoPosts.slice(0,2).map(renderVideoPost).join('');
+const latestFeatures=document.querySelectorAll('.intimacy-post');
+const latestFeature=latestFeatures[latestFeatures.length-1];
+latestFeature?latestFeature.insertAdjacentHTML('afterend',featuredVideoHtml):videoFeed.insertAdjacentHTML('afterbegin',featuredVideoHtml);
 videoFeed.insertAdjacentHTML('beforeend',videoPosts.slice(2).map(renderVideoPost).join(''));
 
 document.querySelectorAll('.content .post').forEach((post,index)=>{
