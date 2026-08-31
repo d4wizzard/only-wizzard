@@ -1,5 +1,6 @@
 const videoFeed=document.querySelector('.content');
 const videoPosts=[
+ {title:'Stäbe, Zauberinnen und das Licht der Versuchung',time:'Gerade eben · Magischer Marktplatz · 18+',copy:'Auf dem Marktplatz gilt: Ein eindrucksvoller Stab allein macht noch keinen großen Zauber. Erst wenn eine selbstbewusste Zauberin den richtigen Winkel wählt, warmes Licht über die Roben streicht und beide vorher wissen, welcher Funke überspringen darf, beginnt die wirklich reizvolle Magie. Zu hartes Licht enthüllt jeden billigen Taschenspielertrick, zu wenig Licht lässt selbst den prächtigsten Stab schüchtern wirken – und wer ungefragt damit herumwedelt, bekommt höchstens Hausverbot beim Hexenrat. Also: Stab polieren, Zauberin fragen, Kerzen dimmen und die Magie mit einem klaren Ja entzünden. ✨',src:'assets/magischer-marktplatz.mp4'},
  {title:'Ihr Blick ist der erste Zauber',time:'Neu · D4Serve Waldgeflüster',copy:'Sie wartet dort, wo der Waldweg schmaler und die Blicke länger werden. Ein Lächeln, ein freches Zwinkern – und schon stellt sich nur noch die Frage, ob du ihrer Spur bis zum Salon folgen möchtest. Der Mantel bleibt vorerst geschlossen; Fantasie und klare Einladung übernehmen den Rest.',src:'assets/nachtwald-begegnung.mp4',poster:'assets/silbermagierin-wald.png'},
  {title:'Zwei Tränke, eine eindeutige Einladung',time:'Neu · D4Serve Ausschank',copy:'Zwei Gläser stehen bereit, doch serviert wird erst nach Blickkontakt und einem ausgesprochenen Wunsch. Sie kennt die richtige Mischung aus süßem Versprechen, prickelnder Spannung und jener höflichen Zurückhaltung, die Lust auf den nächsten Schluck macht.',src:'assets/silbermagie.mp4'},
  {title:'Der Zauberer-Tanz',time:'Video · Tanzritual',copy:'Ein Schritt nach vorn, ein Blick zurück und genau genug Hüftschwung, damit selbst der steifste Zauberstab seinen Takt findet. Ton an und mittanzen.',src:'assets/zauberer-tanz.mp4'},
@@ -9,11 +10,12 @@ const videoPosts=[
  {title:'Zauberer nach Einbruch der Nacht',time:'Neu · Nachtzauber',copy:'Wenn die Türen des Salons geschlossen sind, beginnt die Stunde des Zauberers. Gedämpftes Licht, sorgfältig gewählte Rituale und ein Wizzard, der genau zuhört – für volljährige Gäste, die ihre Regeln vorher gemeinsam festlegen.',src:'assets/d4serve-nachtzauber.mp4'}
 ];
 const renderVideoPost=video=>`<article class="post video-post"><header class="post-head"><div class="post-avatar">OW</div><div><b>Only Wizzard <span class="verified">✓</span></b><span>${video.time}</span></div></header><div class="post-copy"><p><b>${video.title}</b> ${video.copy}</p></div><video controls playsinline preload="metadata"${video.poster?` poster="${video.poster}"`:''}><source src="${video.src}" type="video/mp4">Dein Browser unterstützt dieses Video nicht.</video><footer class="post-actions"><button class="like">♡ <span>219</span></button><button>○ <span>48</span></button><button>↗</button><button class="bookmark">⌑</button></footer></article>`;
-const featuredVideoHtml=videoPosts.slice(0,2).map(renderVideoPost).join('');
+videoFeed.insertAdjacentHTML('afterbegin',renderVideoPost(videoPosts[0]));
+const featuredVideoHtml=videoPosts.slice(1,3).map(renderVideoPost).join('');
 const latestFeatures=document.querySelectorAll('.intimacy-post');
 const latestFeature=latestFeatures[latestFeatures.length-1];
 latestFeature?latestFeature.insertAdjacentHTML('afterend',featuredVideoHtml):videoFeed.insertAdjacentHTML('afterbegin',featuredVideoHtml);
-videoFeed.insertAdjacentHTML('beforeend',videoPosts.slice(2).map(renderVideoPost).join(''));
+videoFeed.insertAdjacentHTML('beforeend',videoPosts.slice(3).map(renderVideoPost).join(''));
 
 document.querySelectorAll('.content .post').forEach((post,index)=>{
   const control=document.createElement('section');control.className='comments-control';
