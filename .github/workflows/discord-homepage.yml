@@ -53,7 +53,10 @@ jobs:
           request = urllib.request.Request(
               os.environ["DISCORD_WEBHOOK"],
               data=json.dumps(payload).encode("utf-8"),
-              headers={"Content-Type": "application/json"},
+              headers={
+                  "Content-Type": "application/json",
+                  "User-Agent": "Only-Wizzard-GitHub-Notifier/1.0",
+              },
               method="POST",
           )
           with urllib.request.urlopen(request, timeout=20) as response:
