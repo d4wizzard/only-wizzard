@@ -23,11 +23,12 @@ permissions:
 jobs:
   announce:
     runs-on: ubuntu-latest
+    env:
+      DISCORD_WEBHOOK: ${{ secrets.DISCORD_HOMEPAGE_WEBHOOK }}
     steps:
       - name: Kurzen Hinweis in Discord posten
-        if: ${{ secrets.DISCORD_HOMEPAGE_WEBHOOK != '' }}
+        if: ${{ env.DISCORD_WEBHOOK != '' }}
         env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_HOMEPAGE_WEBHOOK }}
           UPDATE_TITLE: ${{ github.event.head_commit.message }}
           SITE_URL: https://d4wizzard.github.io/only-wizzard/
         run: |
