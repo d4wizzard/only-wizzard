@@ -1,6 +1,7 @@
 name: Discord – neuer Only-Wizzard-Content
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
@@ -35,7 +36,7 @@ jobs:
           import os
           import urllib.request
 
-          title = os.environ.get("UPDATE_TITLE", "Neuer Inhalt").splitlines()[0].strip()
+          title = (os.environ.get("UPDATE_TITLE") or "Die automatische Ankündigung ist eingerichtet.").splitlines()[0].strip()
           if len(title) > 140:
               title = title[:137] + "..."
 
