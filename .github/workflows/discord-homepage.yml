@@ -1,0 +1,60 @@
+name: Discord – neuer Only-Wizzard-Content
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "assets/**"
+      - "comments-video.js"
+      - "more-content.js"
+      - "more-content-2.js"
+      - "all-images.js"
+      - "recruitment.js"
+      - "d4serve-gallery.js"
+      - "collar-content.js"
+      - "intimacy-content.js"
+      - "fantasy-more.js"
+      - "voice-casting.js"
+
+permissions:
+  contents: read
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kurzen Hinweis in Discord posten
+        if: ${{ secrets.DISCORD_HOMEPAGE_WEBHOOK != '' }}
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_HOMEPAGE_WEBHOOK }}
+          UPDATE_TITLE: ${{ github.event.head_commit.message }}
+          SITE_URL: https://d4wizzard.github.io/only-wizzard/
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          title = os.environ.get("UPDATE_TITLE", "Neuer Inhalt").splitlines()[0].strip()
+          if len(title) > 140:
+              title = title[:137] + "..."
+
+          payload = {
+              "content": (
+                  "✨ **Neuer Inhalt bei Only Wizzard**\n"
+                  f"{title}\n"
+                  f"🔗 {os.environ['SITE_URL']}"
+              ),
+              "allowed_mentions": {"parse": []},
+          }
+
+          request = urllib.request.Request(
+              os.environ["DISCORD_WEBHOOK"],
+              data=json.dumps(payload).encode("utf-8"),
+              headers={"Content-Type": "application/json"},
+              method="POST",
+          )
+          with urllib.request.urlopen(request, timeout=20) as response:
+              if response.status not in (200, 204):
+                  raise RuntimeError(f"Discord antwortete mit HTTP {response.status}")
+          PY
