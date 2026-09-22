@@ -42,6 +42,7 @@ jobs:
               title = title[:137] + "..."
 
           payload = {
+              "thread_name": f"Only Wizzard · {title}"[:100],
               "content": (
                   "✨ **Neuer Inhalt bei Only Wizzard**\n"
                   f"{title}\n"
